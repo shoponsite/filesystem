@@ -25,13 +25,15 @@ class Filesystem implements FilesystemInterface{
     }
 
     /**
-     * @param $source
-     * @param $target
+     * @param File $source
+     * @param File $target
      * @return bool
      */
-    public function rename($source, $target)
+    public function rename(File $source, File $target)
     {
-        // TODO: Implement rename() method.
+        rename($source->getPathname(), $target->getPathname());
+
+        return $target;
     }
 
     /**

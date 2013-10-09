@@ -14,11 +14,11 @@ interface FilesystemInterface {
     public function copy(File $source, File $target, $override = false);
 
     /**
-     * @param $source
-     * @param $target
+     * @param File $source
+     * @param File $target
      * @return bool
      */
-    public function rename($source, $target);
+    public function rename(File $source,File $target);
 
     /**
      * @param File $target
