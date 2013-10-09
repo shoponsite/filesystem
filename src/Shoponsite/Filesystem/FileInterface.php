@@ -180,4 +180,12 @@ interface FileInterface {
      */
     public function getParent();
 
+    /**
+     * Move a file object to another location
+     * @param Filesystem $system
+     * @param string $path
+     * @return File
+     */
+    public function move(Filesystem $system, $path);
+
 }

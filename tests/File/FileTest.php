@@ -1,6 +1,7 @@
 <?php
 
 use Shoponsite\Filesystem\File;
+use Shoponsite\Filesystem\Filesystem;
 
 class FileTest extends PHPUnit_Framework_TestCase {
 
@@ -25,6 +26,22 @@ class FileTest extends PHPUnit_Framework_TestCase {
         $target = getcwd() . '/tests/Assets';
         $target = new File($target);
         $this->assertEquals(getcwd() . '/tests', $target->getParent()->getPathname());
+    }
+
+    public function testMove()
+    {
+        $filepath = getcwd() . '/tests/Assets/filetomove.txt';
+        $targetdir = getcwd() . '/tests/Assets/tmpmover';
+        touch($filepath);
+        mkdir($targetdir);
+        $file = new File($filepath);
+        $targetdir = $targetdir;
+        $file = $file->move(new Filesystem, $targetdir);
+
+        $this->assertSame($targetdir, $file->getPath());
+
+        unlink($file->getPathname());
+        rmdir($targetdir);
     }
 
 }

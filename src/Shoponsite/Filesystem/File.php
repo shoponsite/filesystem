@@ -13,6 +13,9 @@ class File extends \SplFileInfo implements FileInterface{
         return (int) substr(sprintf('%o', $this->getPerms()), -3);
     }
 
+    /**
+     * @return array[File]
+     */
     public function getSubfiles()
     {
         $files = scandir($this->getPathname());
@@ -38,6 +41,23 @@ class File extends \SplFileInfo implements FileInterface{
     public function getParent()
     {
         return new File($this->getPath());
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function move(Filesystem $system, $path)
+    {
+        $dir = new self($path);
+
+        if(!$dir->isDir())
+        {
+            $system->mkdir($dir->getPathname());
+        }
+
+        $system->move($this, $dir->getPathname());
+
+        return new File($dir->getPathname() . DIRECTORY_SEPARATOR . $this->getFilename());
     }
 
 
