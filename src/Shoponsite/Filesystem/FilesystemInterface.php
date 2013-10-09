@@ -15,10 +15,17 @@ interface FilesystemInterface {
 
     /**
      * @param File $source
-     * @param File $target
-     * @return bool
+     * @param string $target
+     * @return File
      */
-    public function rename(File $source,File $target);
+    public function rename(File $source, $name);
+
+    /**
+     * @param File $source
+     * @param string $dir
+     * @return File
+     */
+    public function move(File $source, $dir);
 
     /**
      * @param File $target

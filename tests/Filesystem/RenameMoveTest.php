@@ -24,12 +24,26 @@ class RenameMoveTest extends PHPUnit_Framework_TestCase {
         $source = getcwd() . '/tests/Assets/tmpname.txt';
         touch($source);
         $source = new File($source);
-        $targetpath = getcwd() . '/tests/Assets/newname.txt';
-        $target = new File($targetpath);
 
-        $source = $this->system->rename($source, $target);
-        $this->assertSame($targetpath, $source->getPathname());
-        unlink($target->getPathname());
+        $source = $this->system->rename($source, 'newname.txt');
+        $this->assertSame('newname.txt', $source->getFilename());
+        unlink($source->getPathname());
+    }
+
+    public function testMove()
+    {
+        $source = getcwd() . '/tests/Assets/tmpname.txt';
+        touch($source);
+        $sourcefile = new File($source);
+        $targetdir = getcwd() . '/tests/Assets/movedfiledir';
+        mkdir($targetdir);
+
+        $file = $this->system->move($sourcefile, $targetdir);
+        $this->assertSame($targetdir, $file->getPath());
+
+        unlink($file->getPathname());
+        rmdir($targetdir);
+
     }
 
 }

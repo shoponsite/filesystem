@@ -26,15 +26,28 @@ class Filesystem implements FilesystemInterface{
 
     /**
      * @param File $source
-     * @param File $target
+     * @param string $name
      * @return bool
      */
-    public function rename(File $source, File $target)
+    public function rename(File $source, $name)
     {
-        rename($source->getPathname(), $target->getPathname());
+        rename($source->getPathname(), $source->getPath() . DIRECTORY_SEPARATOR . $name);
 
-        return $target;
+        return new File($source->getPath() . DIRECTORY_SEPARATOR . $name);
     }
+
+    /**
+     * @param File $source
+     * @param string $dir
+     * @return File
+     */
+    public function move(File $source, $dir)
+    {
+        rename($source->getPathname(), $dir . DIRECTORY_SEPARATOR . $source->getFilename());
+
+        return new File($dir . DIRECTORY_SEPARATOR . $source->getFilename());
+    }
+
 
     /**
      * Umask is not safe considering multithreaded servers... but this is alot easier and takes less computing time
