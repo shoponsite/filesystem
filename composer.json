@@ -1,0 +1,14 @@
+{
+    "name" : "shoponsite/uploader",
+    "require":
+    {
+    },
+    "autoload":
+    {
+        "psr-0":
+        {
+            "Shoponsite\\Filesystem": "src/"
+        }
+    },
+    "minimum-stability" : "dev"
+}
