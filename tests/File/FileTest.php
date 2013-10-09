@@ -44,4 +44,20 @@ class FileTest extends PHPUnit_Framework_TestCase {
         rmdir($targetdir);
     }
 
+    public function testMovingIntoNonExistingDir()
+    {
+        $filepath = getcwd() . '/tests/Assets/filetomove.txt';
+        $targetdir = getcwd() . '/tests/Assets/tmpmover';
+        touch($filepath);
+
+        $file = new File($filepath);
+        $targetdir = $targetdir;
+        $file = $file->move(new Filesystem, $targetdir);
+
+        $this->assertSame($targetdir, $file->getPath());
+
+        unlink($file->getPathname());
+        rmdir($targetdir);
+    }
+
 }

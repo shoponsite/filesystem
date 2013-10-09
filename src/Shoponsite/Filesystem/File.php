@@ -52,7 +52,7 @@ class File extends \SplFileInfo implements FileInterface{
 
         if(!$dir->isDir())
         {
-            $system->mkdir($dir->getPathname());
+            $system->mkdir($dir);
         }
 
         $system->move($this, $dir->getPathname());
