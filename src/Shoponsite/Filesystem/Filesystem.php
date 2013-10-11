@@ -99,7 +99,10 @@ class Filesystem implements FilesystemInterface{
                 $file = new File($file);
             }
 
-            $this->delete($file, $recursive);
+            if($this->exists($file))
+            {
+                $this->delete($file, $recursive);
+            }
         }
     }
 
