@@ -171,12 +171,15 @@ class Filesystem implements FilesystemInterface{
         {
             $files = $file->getSubfiles();
 
-            if(count($files))
+            if(count($files) && $recursive)
             {
                 $this->remove($files, $recursive);
             }
 
-            rmdir($file->getPathname());
+            if(!count($files) || $recursive)
+            {
+                rmdir($file->getPathname());
+            }
         }
         else
         {
