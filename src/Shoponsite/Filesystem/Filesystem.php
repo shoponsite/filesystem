@@ -105,27 +105,13 @@ class Filesystem implements FilesystemInterface{
 
     /**
      * @param File $file
-     * @param bool $recursive
+     * @return bool
      */
-    protected function delete(File $file, $recursive)
+    public function exists(File $file)
     {
-        if($file->isDir())
-        {
-            $files = $file->getSubfiles();
-
-            if(count($files))
-            {
-                $this->remove($files, $recursive);
-            }
-
-            rmdir($file->getPathname());
-        }
-        else
-        {
-            unlink($file->getPathname());
-        }
-
+        return $file->isFile() || $file->isDir();
     }
+
 
     /**
      * Chmod a folder or file. If a folder is provided you can do this recursively
@@ -170,6 +156,30 @@ class Filesystem implements FilesystemInterface{
             return true;
 
         return $this->mkdir($dir);
+    }
+
+    /**
+     * @param File $file
+     * @param bool $recursive
+     */
+    protected function delete(File $file, $recursive)
+    {
+        if($file->isDir())
+        {
+            $files = $file->getSubfiles();
+
+            if(count($files))
+            {
+                $this->remove($files, $recursive);
+            }
+
+            rmdir($file->getPathname());
+        }
+        else
+        {
+            unlink($file->getPathname());
+        }
+
     }
 
 }

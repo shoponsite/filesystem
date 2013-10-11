@@ -41,6 +41,12 @@ interface FilesystemInterface {
     public function remove($files);
 
     /**
+     * @param $file
+     * @return bool
+     */
+    public function exists(File $file);
+
+    /**
      * Chmod a folder or file. If a folder is provided you can do this recursively
      *
      * @param File $target
