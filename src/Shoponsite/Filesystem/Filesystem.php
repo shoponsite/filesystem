@@ -82,11 +82,49 @@ class Filesystem implements FilesystemInterface{
 
     /**
      * @param string|array|\Traversable $files
+     * @param bool $recursive
      * @return bool
      */
-    public function remove($files)
+    public function remove($files, $recursive = false)
     {
-        // TODO: Implement remove() method.
+        if(!is_array($files))
+        {
+            $files = array($files);
+        }
+
+        foreach($files as $file)
+        {
+            if(is_string($file))
+            {
+                $file = new File($file);
+            }
+
+            $this->delete($file, $recursive);
+        }
+    }
+
+    /**
+     * @param File $file
+     * @param bool $recursive
+     */
+    protected function delete(File $file, $recursive)
+    {
+        if($file->isDir())
+        {
+            $files = $file->getSubfiles();
+
+            if(count($files))
+            {
+                $this->remove($files, $recursive);
+            }
+
+            rmdir($file->getPathname());
+        }
+        else
+        {
+            unlink($file->getPathname());
+        }
+
     }
 
     /**
