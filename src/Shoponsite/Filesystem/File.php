@@ -13,6 +13,11 @@ class File extends \SplFileInfo implements FileInterface{
         return (int) substr(sprintf('%o', $this->getPerms()), -3);
     }
 
+    public function getExtension()
+    {
+        return pathinfo($this->getPathname(), PATHINFO_EXTENSION);
+    }
+
     /**
      * @return array[File]
      */
